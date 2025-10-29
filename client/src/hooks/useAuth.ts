@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authApi } from '../services/auth';
-import { LoginFormData, RegisterFormData } from '../lib/validation';
 import { User } from '../types';
 import toast from 'react-hot-toast';
 
@@ -62,7 +61,7 @@ export const useLogout = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: authApi.logout,
+    mutationFn: () => Promise.resolve(authApi.logout()),
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: authKeys.user });
       queryClient.clear();

@@ -1,6 +1,6 @@
 import { Edit, Trash2, Eye, Calendar, MapPin, Clock, DollarSign } from 'lucide-react';
 import { Entry } from '../types';
-import { formatDate, capitalize } from '../lib/utils';
+import { formatDate } from '../lib/utils';
 
 interface EntryCardProps {
   entry: Entry;

@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff, Loader2, Film } from 'lucide-react';
 import { useRegister, useAuth } from '../hooks/useAuth';
 import { registerFormSchema, RegisterFormData } from '../lib/validation';
-import { APP_NAME } from '../config/constants';
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);

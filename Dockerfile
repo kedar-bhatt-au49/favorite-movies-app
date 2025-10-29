@@ -19,6 +19,9 @@ COPY . .
 # Build the application
 RUN npm run build
 
+# Set working directory to server for runtime
+WORKDIR /app/server
+
 # Expose port
 EXPOSE $PORT
 

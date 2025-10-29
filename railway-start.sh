@@ -3,8 +3,10 @@
 # Railway start script
 echo "Starting application..."
 
-# Run database migrations
+# Change to server directory
 cd server
+
+# Run database migrations
 npm run db:push
 
 # Seed database if needed

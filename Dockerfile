@@ -19,11 +19,11 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Set working directory to server for runtime
-WORKDIR /app/server
+# Generate Prisma client
+RUN cd server && npx prisma generate
 
 # Expose port
 EXPOSE $PORT
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["node", "start-server.js"]

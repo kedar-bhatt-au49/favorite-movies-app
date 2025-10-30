@@ -29,7 +29,7 @@ export const entriesApi = {
     // Append entry data
     Object.entries(entryData).forEach(([key, value]) => {
       if (value !== undefined && value !== '') {
-        formData.append(key, value);
+        formData.append(key, String(value));
       }
     });
 
@@ -53,7 +53,7 @@ export const entriesApi = {
     // Append entry data
     Object.entries(entryData).forEach(([key, value]) => {
       if (value !== undefined) {
-        formData.append(key, value);
+        formData.append(key, String(value));
       }
     });
 

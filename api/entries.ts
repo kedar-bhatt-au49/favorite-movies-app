@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 // Mock data
-const entries = [
+let entries = [
   {
     id: '1',
     title: 'The Shawshank Redemption',

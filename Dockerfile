@@ -7,8 +7,9 @@ WORKDIR /app
 # Copy root package.json
 COPY package*.json ./
 
-# Copy server package.json
+# Copy server package.json and prisma schema first
 COPY server/package*.json ./server/
+COPY server/prisma/ ./server/prisma/
 
 # Install root dependencies
 RUN npm install
@@ -17,11 +18,11 @@ RUN npm install
 WORKDIR /app/server
 RUN npm install
 
-# Copy server source code
-COPY server/ ./
-
-# Generate Prisma client
+# Generate Prisma client (before copying other files)
 RUN npx prisma generate
+
+# Copy rest of server source code
+COPY server/src/ ./src/
 
 # Build TypeScript
 RUN npm run build

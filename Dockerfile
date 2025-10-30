@@ -1,5 +1,11 @@
-# Railway Deployment - Simple approach
-FROM node:18-alpine
+# Railway Deployment - Use Debian-based image for better compatibility
+FROM node:18-slim
+
+# Install necessary packages for Prisma
+RUN apt-get update && apt-get install -y \
+    openssl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app/server

@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "tsc",
+    "build": "npx tsc --build --verbose",
     "start": "node dist/index.js",
     "postinstall": "prisma generate || echo 'Prisma generate skipped'",
     "db:generate": "prisma generate",
@@ -27,7 +27,9 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.0-rc.4",
     "pg": "^8.11.3",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "typescript": "^5.3.3",
+    "prisma": "^5.7.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -38,9 +40,7 @@
     "@types/node": "^20.10.4",
     "@types/pg": "^8.10.7",
     "nodemon": "^3.0.2",
-    "prisma": "^5.7.0",
     "ts-node": "^10.9.2",
-    "tsx": "^4.6.2",
-    "typescript": "^5.3.3"
+    "tsx": "^4.6.2"
   }
 }

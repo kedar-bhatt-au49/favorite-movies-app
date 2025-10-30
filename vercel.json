@@ -34,10 +34,5 @@
       "src": "/(.*)",
       "dest": "/client/dist/$1"
     }
-  ],
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "@vercel/node@3.0.7"
-    }
-  }
+  ]
 }

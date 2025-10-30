@@ -5,6 +5,10 @@
   "installCommand": "npm ci",
   "rewrites": [
     {
+      "source": "/api/entries/(.*)",
+      "destination": "/api/entries"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/api/$1"
     },

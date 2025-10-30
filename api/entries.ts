@@ -70,6 +70,78 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       return
     }
 
+    // Check if this is a request for a specific entry (via URL path)
+    const urlPath = req.url || ''
+    const entryIdMatch = urlPath.match(/\/api\/entries\/(.+)/)
+    const entryId = entryIdMatch ? entryIdMatch[1] : null
+
+    // Handle individual entry operations
+    if (entryId) {
+      const entryIndex = entries.findIndex(entry => entry.id === entryId)
+      const entry = entries[entryIndex]
+
+      if (req.method === 'GET') {
+        if (!entry) {
+          return res.status(404).json({
+            success: false,
+            error: 'Entry not found'
+          })
+        }
+        
+        return res.status(200).json({
+          success: true,
+          data: entry
+        })
+      }
+
+      if (req.method === 'PUT') {
+        if (!entry) {
+          return res.status(404).json({
+            success: false,
+            error: 'Entry not found'
+          })
+        }
+
+        const updatedEntry = {
+          ...entry,
+          ...req.body,
+          id: entry.id,
+          userId: entry.userId,
+          createdAt: entry.createdAt,
+          updatedAt: new Date().toISOString()
+        }
+
+        entries[entryIndex] = updatedEntry
+
+        return res.status(200).json({
+          success: true,
+          data: updatedEntry
+        })
+      }
+
+      if (req.method === 'DELETE') {
+        if (!entry) {
+          return res.status(404).json({
+            success: false,
+            error: 'Entry not found'
+          })
+        }
+
+        entries.splice(entryIndex, 1)
+
+        return res.status(200).json({
+          success: true,
+          message: 'Entry deleted successfully'
+        })
+      }
+
+      return res.status(405).json({
+        success: false,
+        error: 'Method not allowed for individual entry'
+      })
+    }
+
+    // Handle collection operations (GET all, POST new)
     if (req.method === 'GET') {
       return res.status(200).json({
         success: true,

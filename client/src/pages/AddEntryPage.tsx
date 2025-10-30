@@ -24,6 +24,8 @@ export default function AddEntryPage() {
       type: 'MOVIE',
       description: '',
       posterUrl: '',
+      genre: '',
+      rating: undefined,
     },
   });
 
@@ -129,6 +131,43 @@ export default function AddEntryPage() {
             {errors.director && (
               <p className="text-red-600 text-sm mt-1">{errors.director.message}</p>
             )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Genre */}
+            <div>
+              <label className="label block mb-2">
+                Genre <span className="text-red-500">*</span>
+              </label>
+              <input
+                {...register('genre')}
+                type="text"
+                className="input w-full"
+                placeholder="e.g., Action, Drama, Comedy"
+              />
+              {errors.genre && (
+                <p className="text-red-600 text-sm mt-1">{errors.genre.message}</p>
+              )}
+            </div>
+
+            {/* Rating */}
+            <div>
+              <label className="label block mb-2">
+                Rating (0-10)
+              </label>
+              <input
+                {...register('rating')}
+                type="number"
+                step="0.1"
+                min="0"
+                max="10"
+                className="input w-full"
+                placeholder="e.g., 8.5"
+              />
+              {errors.rating && (
+                <p className="text-red-600 text-sm mt-1">{errors.rating.message}</p>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

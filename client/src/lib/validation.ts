@@ -10,6 +10,8 @@ export const entryFormSchema = z.object({
   director: z.string()
     .min(1, 'Director is required')
     .max(VALIDATION.DIRECTOR_MAX_LENGTH, `Director name must be less than ${VALIDATION.DIRECTOR_MAX_LENGTH} characters`),
+  genre: z.string().min(1, 'Genre is required'),
+  rating: z.coerce.number().min(0, 'Rating must be 0 or higher').max(10, 'Rating must be 10 or lower').optional(),
   budget: z.string().min(1, 'Budget is required'),
   location: z.string()
     .min(1, 'Location is required')

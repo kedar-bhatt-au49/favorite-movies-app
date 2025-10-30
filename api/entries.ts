@@ -149,6 +149,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
           entries: entries,
           pagination: {
             total: entries.length,
+            totalEntries: entries.length,
             page: 1,
             limit: 10,
             pages: 1,
@@ -164,6 +165,12 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       const newEntry = {
         id: Date.now().toString(),
         ...req.body,
+        // Add default values for missing fields
+        genre: req.body.genre || 'Unknown',
+        rating: req.body.rating || 0,
+        // Ensure proper field names
+        posterUrl: req.body.posterUrl || req.body.poster || '',
+        watchedDate: req.body.watchedDate || now.split('T')[0],
         createdAt: now,
         updatedAt: now,
         userId: 'demo-user'

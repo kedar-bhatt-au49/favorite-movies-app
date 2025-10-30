@@ -12,8 +12,7 @@ services:
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        # Add your MySQL connection string here
-        # Format: mysql://username:password@host:port/database_name
-        value: mysql://user:password@host:3306/favorite_movies
+        # Temporary - replace with your actual MySQL URL
+        value: mysql://root:password@localhost:3306/favorite_movies
       - key: JWT_SECRET
-        generateValue: true
+        value: mySecretKey123ABC

@@ -324,9 +324,14 @@ npm run db:seed
 
 ### 🎯 Live Demo
 
-- **Frontend**: [https://favorite-movies-kedar.vercel.app](https://favorite-movies-kedar.vercel.app)
-- **Backend API**: [https://favorite-movies-api-kedar.railway.app](https://favorite-movies-api-kedar.railway.app)
-- **API Documentation**: [https://favorite-movies-api-kedar.railway.app/api/health](https://favorite-movies-api-kedar.railway.app/api/health)
+- **Frontend**: [https://favorite-movies-j3k33y3j8-kedars-projects-f337497c.vercel.app](https://favorite-movies-j3k33y3j8-kedars-projects-f337497c.vercel.app)
+- **Backend API**: [https://favorite-movies-app-3.onrender.com](https://favorite-movies-app-3.onrender.com)
+- **API Health Check**: [https://favorite-movies-app-3.onrender.com/api/health](https://favorite-movies-app-3.onrender.com/api/health)
+
+### 🔧 Current Deployment Status
+
+**✅ Frontend (Vercel)**: Live and operational  
+**🔄 Backend (Render)**: Deployed - checking OpenSSL/Prisma compatibility
 
 ### 🔑 Demo Credentials
 

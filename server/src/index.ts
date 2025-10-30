@@ -20,7 +20,8 @@ app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? [
         'https://favorite-movies-j3k33y3j8-kedars-projects-f337497c.vercel.app',
-        'https://favorite-movies-kedar.vercel.app'
+        'https://favorite-movies-kedar.vercel.app',
+        'https://favorite-movies-app-3.onrender.com'
       ]
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true

@@ -12,13 +12,8 @@ services:
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        fromDatabase:
-          name: favorite-movies-db
-          property: connectionString
+        # Add your MySQL connection string here
+        # Format: mysql://username:password@host:port/database_name
+        value: mysql://user:password@host:3306/favorite_movies
       - key: JWT_SECRET
         generateValue: true
-
-databases:
-  - name: favorite-movies-db
-    databaseName: favorite_movies
-    user: favorite_movies_user

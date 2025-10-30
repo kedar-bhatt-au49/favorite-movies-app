@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import path from 'path';
+import { prisma } from './lib/prisma';
 
 // Import routes
 import entryRoutes from './routes/entries';
@@ -37,8 +38,24 @@ app.use('/api/entries', entryRoutes);
 app.use('/api/auth', authRoutes);
 
 // Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running!' });
+app.get('/api/health', async (req, res) => {
+  try {
+    // Test database connection
+    await prisma.$connect();
+    await prisma.user.count(); // Simple query to test DB
+    res.json({ 
+      status: 'OK', 
+      message: 'Server is running!',
+      database: 'Connected'
+    });
+  } catch (error) {
+    console.error('Database connection error:', error);
+    res.status(500).json({ 
+      status: 'ERROR', 
+      message: 'Server running but database connection failed',
+      database: 'Disconnected'
+    });
+  }
 });
 
 // Error handling middleware

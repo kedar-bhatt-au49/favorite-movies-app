@@ -1,29 +1,33 @@
-# For Railway deployment
+# Railway Deployment - Simple approach
 FROM node:18-alpine
 
+# Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy root package.json
 COPY package*.json ./
+
+# Copy server package.json
 COPY server/package*.json ./server/
-COPY client/package*.json ./client/
 
-# Install dependencies
+# Install root dependencies
 RUN npm install
-RUN cd server && npm install
-RUN cd client && npm install
 
-# Copy source code
-COPY . .
+# Install server dependencies
+WORKDIR /app/server
+RUN npm install
 
-# Build the application
-RUN npm run build
+# Copy server source code
+COPY server/ ./
 
 # Generate Prisma client
-RUN cd server && npx prisma generate
+RUN npx prisma generate
+
+# Build TypeScript
+RUN npm run build
 
 # Expose port
 EXPOSE $PORT
 
-# Start the application
-CMD ["node", "start-server.js"]
+# Start command
+CMD ["node", "dist/index.js"]

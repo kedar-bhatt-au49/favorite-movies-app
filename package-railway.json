@@ -1,0 +1,9 @@
+{
+  "name": "favorite-movies-backend",
+  "scripts": {
+    "build": "cd server && npm install && npx prisma generate && npm run build",
+    "start": "cd server && npm start",
+    "railway:build": "npm install && cd server && npm install && npx prisma generate && npm run build",
+    "railway:start": "cd server && node dist/index.js"
+  }
+}

@@ -18,7 +18,10 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-frontend-domain.vercel.app'] 
+    ? [
+        'https://favorite-movies-j3k33y3j8-kedars-projects-f337497c.vercel.app',
+        'https://favorite-movies-kedar.vercel.app'
+      ]
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true
 }));

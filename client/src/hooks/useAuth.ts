@@ -31,7 +31,7 @@ export const useLogin = () => {
       toast.success('Login successful!');
     },
     onError: (error: any) => {
-      const message = error.response?.data?.message || 'Login failed';
+      const message = error.response?.data?.error || error.response?.data?.message || 'Login failed';
       toast.error(message);
     },
   });
@@ -50,7 +50,7 @@ export const useRegister = () => {
       toast.success('Registration successful!');
     },
     onError: (error: any) => {
-      const message = error.response?.data?.message || 'Registration failed';
+      const message = error.response?.data?.error || error.response?.data?.message || 'Registration failed';
       toast.error(message);
     },
   });

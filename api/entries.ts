@@ -55,7 +55,17 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method === 'GET') {
       return res.status(200).json({
         success: true,
-        data: entries
+        data: {
+          entries: entries,
+          pagination: {
+            total: entries.length,
+            page: 1,
+            limit: 10,
+            pages: 1,
+            hasMore: false,
+            currentPage: 1
+          }
+        }
       })
     }
 

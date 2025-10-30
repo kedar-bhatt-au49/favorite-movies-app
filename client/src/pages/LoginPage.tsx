@@ -125,7 +125,8 @@ export default function LoginPage() {
         <div className="mt-6 p-4 bg-blue-50 rounded-md">
           <h3 className="text-sm font-medium text-blue-800">Demo Credentials</h3>
           <p className="text-xs text-blue-600 mt-1">
-            You can use any email and password to test the app (auth is optional)
+            <strong>Email:</strong> demo@example.com<br />
+            <strong>Password:</strong> demo123
           </p>
         </div>
       </div>

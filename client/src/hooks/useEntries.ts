@@ -45,7 +45,7 @@ export const useCreateEntry = () => {
       toast.success('Entry created successfully!');
     },
     onError: (error: any) => {
-      const message = error.response?.data?.message || 'Failed to create entry';
+      const message = error.response?.data?.error || error.response?.data?.message || 'Failed to create entry';
       toast.error(message);
     },
   });
@@ -71,7 +71,7 @@ export const useUpdateEntry = () => {
       toast.success('Entry updated successfully!');
     },
     onError: (error: any) => {
-      const message = error.response?.data?.message || 'Failed to update entry';
+      const message = error.response?.data?.error || error.response?.data?.message || 'Failed to update entry';
       toast.error(message);
     },
   });
@@ -88,7 +88,7 @@ export const useDeleteEntry = () => {
       toast.success('Entry deleted successfully!');
     },
     onError: (error: any) => {
-      const message = error.response?.data?.message || 'Failed to delete entry';
+      const message = error.response?.data?.error || error.response?.data?.message || 'Failed to delete entry';
       toast.error(message);
     },
   });

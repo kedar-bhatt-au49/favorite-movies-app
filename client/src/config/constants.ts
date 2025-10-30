@@ -2,7 +2,7 @@
 export const API_BASE_URL = '/api';
 
 // App Configuration
-export const APP_NAME = 'Favorite Movies & TV Shows';
+export const APP_NAME = 'Medianalytiq';
 export const ITEMS_PER_PAGE = 10;
 
 // Validation constraints

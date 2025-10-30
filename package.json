@@ -1,14 +1,17 @@
 {
-  "name": "favorite-movies-app",
+  "name": "medianalytiq",
   "version": "1.0.0",
-  "description": "Full-stack app for managing favorite movies and TV shows",
+  "description": "Medianalytiq - Advanced media analytics and management platform",
   "repository": {
     "type": "git",
     "url": "https://github.com/kedar-bhatt-au49/favorite-movies-app.git"
   },
   "keywords": [
-    "movies",
-    "tv-shows",
+    "medianalytiq",
+    "media analytics", 
+    "movie management",
+    "tv shows",
+    "entertainment analytics",
     "react",
     "typescript",
     "nodejs",

@@ -1,7 +1,7 @@
 {
-  "name": "favorite-movies-server",
+  "name": "medianalytiq-server",
   "version": "1.0.0",
-  "description": "Backend for Favorite Movies & TV Shows app",
+  "description": "Backend for Medianalytiq - Media Analytics & Management Platform",
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",

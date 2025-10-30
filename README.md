@@ -1,6 +1,10 @@
-# Favorite Movies & TV Shows
+# Medianalytiq
 
-A full-stack web application for managing your favorite movies and TV shows collection. Built with React, TypeScript, Node.js, Express, Prisma, and MySQL.
+**Medianalytiq** - Advanced media analytics and management platform for movies and TV shows. Built with React, TypeScript, Node.js, Express, Prisma, and MySQL.
+
+## 🎬 About Medianalytiq
+
+Medianalytiq is a comprehensive media management platform that helps you organize, analyze, and track your movie and TV show collection with advanced analytics capabilities.
 
 ## 🚀 Features
 

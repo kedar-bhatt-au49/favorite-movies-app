@@ -1,21 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-// Simple in-memory user storage (shared with register.ts)
-let users: Array<{
-  id: string;
-  email: string;
-  password: string;
-  name: string;
-  createdAt: string;
-}> = [
-  {
-    id: 'demo-user',
-    email: 'demo@example.com',
-    password: 'demo123',
-    name: 'Demo User',
-    createdAt: '2024-01-01T00:00:00Z'
-  }
-];
+import { users } from '../dataStore';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   try {

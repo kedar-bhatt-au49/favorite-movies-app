@@ -1,56 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-// Mock data - simplified for debugging
-let entries = [
-  {
-    id: '1',
-    title: 'The Shawshank Redemption',
-    type: 'MOVIE',
-    genre: 'Drama',
-    rating: 9.3,
-    description: 'Two imprisoned men bond over a number of years.',
-    posterUrl: 'https://via.placeholder.com/300x450',
-    year: 1994,
-    director: 'Frank Darabont',
-    duration: '142 min',
-    location: 'Ohio State Reformatory',
-    budget: '$25 million',
-    watchedDate: '2024-01-15',
-    createdAt: '2024-01-15T10:30:00Z',
-    updatedAt: '2024-01-15T10:30:00Z',
-    userId: 'demo-user'
-  },
-  {
-    id: '2',
-    title: 'The Godfather',
-    type: 'MOVIE',
-    genre: 'Crime',
-    rating: 9.2,
-    description: 'The aging patriarch of an organized crime dynasty.',
-    posterUrl: 'https://via.placeholder.com/300x450',
-    year: 1972,
-    director: 'Francis Ford Coppola',
-    duration: '175 min',
-    location: 'New York City',
-    budget: '$6 million',
-    watchedDate: '2024-01-20',
-    createdAt: '2024-01-20T14:15:00Z',
-    updatedAt: '2024-01-20T14:15:00Z',
-    userId: 'demo-user'
-  }
-];
-
-// Helper function to get user ID from token
-function getUserIdFromToken(req: VercelRequest): string | null {
-  const authHeader = req.headers.authorization;
-  const token = authHeader?.replace('Bearer ', '');
-  
-  if (!token || !token.startsWith('token-')) {
-    return null;
-  }
-  
-  return token.replace('token-', '');
-}
+import { entries, getUserIdFromToken, addEntry } from './dataStore';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   // Set CORS headers first
@@ -67,7 +16,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     console.log('Request URL:', req.url);
 
     // Get user ID from token for authenticated requests
-    const userId = getUserIdFromToken(req);
+    const userId = getUserIdFromToken(req.headers.authorization);
     console.log('User ID from token:', userId);
 
     // Parse URL for specific entry ID
@@ -209,22 +158,17 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       console.log('Creating new entry with data:', req.body);
       console.log('Creating entry for user:', userId);
       
-      const now = new Date().toISOString();
-      const newEntry = {
-        id: Date.now().toString(),
+      const newEntry = addEntry({
         ...req.body,
         // Add default values for missing fields
         genre: req.body?.genre || 'Unknown',
         rating: req.body?.rating || 0,
         // Ensure proper field names
-        posterUrl: req.body?.posterUrl || req.body?.poster || '',
-        watchedDate: req.body?.watchedDate || now.split('T')[0],
-        createdAt: now,
-        updatedAt: now,
+        posterUrl: req.body?.posterUrl || req.body?.poster || 'https://via.placeholder.com/300x450/666666/ffffff?text=No+Poster',
+        watchedDate: req.body?.watchedDate || new Date().toISOString().split('T')[0],
         userId: userId // Associate entry with the logged-in user
-      };
+      });
       
-      entries.push(newEntry);
       console.log('Created new entry:', newEntry.id, 'for user:', userId);
       
       return res.status(201).json({

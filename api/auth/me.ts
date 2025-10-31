@@ -1,21 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-// Simple in-memory user storage (shared with other auth endpoints)
-let users: Array<{
-  id: string;
-  email: string;
-  password: string;
-  name: string;
-  createdAt: string;
-}> = [
-  {
-    id: 'demo-user',
-    email: 'demo@example.com',
-    password: 'demo123',
-    name: 'Demo User',
-    createdAt: '2024-01-01T00:00:00Z'
-  }
-];
+import { findUserById, getUserIdFromToken } from '../dataStore';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -32,20 +16,17 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method === 'GET') {
       // Check for auth token
       const authHeader = req.headers.authorization;
-      const token = authHeader?.replace('Bearer ', '');
+      const userId = getUserIdFromToken(authHeader);
       
-      if (!token) {
+      if (!userId) {
         return res.status(401).json({
           success: false,
-          error: 'No token provided'
+          error: 'Invalid or missing token'
         });
       }
       
-      // Extract user ID from token (format: token-{userId})
-      const userId = token.replace('token-', '');
-      
       // Find user by ID
-      const user = users.find(u => u.id === userId);
+      const user = findUserById(userId);
       
       if (!user) {
         return res.status(401).json({

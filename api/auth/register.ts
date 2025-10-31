@@ -1,21 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-// Simple in-memory user storage (in production, use a real database)
-let users: Array<{
-  id: string;
-  email: string;
-  password: string;
-  name: string;
-  createdAt: string;
-}> = [
-  {
-    id: 'demo-user',
-    email: 'demo@example.com',
-    password: 'demo123',
-    name: 'Demo User',
-    createdAt: '2024-01-01T00:00:00Z'
-  }
-];
+import { users, findUserByEmail, addUser } from '../dataStore';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -41,7 +25,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       }
       
       // Check if user already exists
-      const existingUser = users.find(user => user.email === email);
+      const existingUser = findUserByEmail(email);
       if (existingUser) {
         return res.status(400).json({
           success: false,
@@ -50,15 +34,12 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       }
       
       // Create new user
-      const newUser = {
-        id: `user-${Date.now()}`,
+      const newUser = addUser({
         email,
         password, // In production, hash this password
-        name,
-        createdAt: new Date().toISOString()
-      };
+        name
+      });
       
-      users.push(newUser);
       console.log('New user registered:', newUser.email);
       
       return res.status(201).json({

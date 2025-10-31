@@ -1,5 +1,22 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+// Simple in-memory user storage (shared with other auth endpoints)
+let users: Array<{
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+  createdAt: string;
+}> = [
+  {
+    id: 'demo-user',
+    email: 'demo@example.com',
+    password: 'demo123',
+    name: 'Demo User',
+    createdAt: '2024-01-01T00:00:00Z'
+  }
+];
+
 export default function handler(req: VercelRequest, res: VercelResponse) {
   try {
     // Enable CORS
@@ -17,20 +34,33 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       const authHeader = req.headers.authorization;
       const token = authHeader?.replace('Bearer ', '');
       
-      if (!token || token !== 'demo-jwt-token') {
+      if (!token) {
         return res.status(401).json({
           success: false,
-          error: 'Unauthorized'
+          error: 'No token provided'
         });
       }
       
-      // Return demo user data
+      // Extract user ID from token (format: token-{userId})
+      const userId = token.replace('token-', '');
+      
+      // Find user by ID
+      const user = users.find(u => u.id === userId);
+      
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          error: 'Invalid token'
+        });
+      }
+      
+      // Return user data (without password)
       return res.status(200).json({
         success: true,
         data: {
-          id: 'demo-user',
-          email: 'demo@example.com',
-          name: 'Demo User'
+          id: user.id,
+          email: user.email,
+          name: user.name
         }
       });
     }

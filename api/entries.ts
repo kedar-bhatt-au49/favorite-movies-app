@@ -40,6 +40,18 @@ let entries = [
   }
 ];
 
+// Helper function to get user ID from token
+function getUserIdFromToken(req: VercelRequest): string | null {
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.replace('Bearer ', '');
+  
+  if (!token || !token.startsWith('token-')) {
+    return null;
+  }
+  
+  return token.replace('token-', '');
+}
+
 export default function handler(req: VercelRequest, res: VercelResponse) {
   // Set CORS headers first
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -53,6 +65,10 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   try {
     console.log('Entries API called with method:', req.method);
     console.log('Request URL:', req.url);
+
+    // Get user ID from token for authenticated requests
+    const userId = getUserIdFromToken(req);
+    console.log('User ID from token:', userId);
 
     // Parse URL for specific entry ID
     const urlPath = req.url || '';
@@ -83,10 +99,25 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       if (req.method === 'PUT') {
+        if (!userId) {
+          return res.status(401).json({
+            success: false,
+            error: 'Authentication required'
+          });
+        }
+
         if (!entry) {
           return res.status(404).json({
             success: false,
             error: 'Entry not found'
+          });
+        }
+
+        // Check if user owns this entry
+        if (entry.userId !== userId) {
+          return res.status(403).json({
+            success: false,
+            error: 'You can only edit your own entries'
           });
         }
 
@@ -109,10 +140,25 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       if (req.method === 'DELETE') {
+        if (!userId) {
+          return res.status(401).json({
+            success: false,
+            error: 'Authentication required'
+          });
+        }
+
         if (!entry) {
           return res.status(404).json({
             success: false,
             error: 'Entry not found'
+          });
+        }
+
+        // Check if user owns this entry
+        if (entry.userId !== userId) {
+          return res.status(403).json({
+            success: false,
+            error: 'You can only delete your own entries'
           });
         }
 
@@ -133,6 +179,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
 
     // Handle collection operations (GET all, POST new)
     if (req.method === 'GET') {
+      // Return all entries (could be filtered by user if needed)
       console.log('Returning all entries, count:', entries.length);
       return res.status(200).json({
         success: true,
@@ -152,7 +199,15 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (req.method === 'POST') {
+      if (!userId) {
+        return res.status(401).json({
+          success: false,
+          error: 'Authentication required to create entries'
+        });
+      }
+
       console.log('Creating new entry with data:', req.body);
+      console.log('Creating entry for user:', userId);
       
       const now = new Date().toISOString();
       const newEntry = {
@@ -166,11 +221,11 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         watchedDate: req.body?.watchedDate || now.split('T')[0],
         createdAt: now,
         updatedAt: now,
-        userId: 'demo-user'
+        userId: userId // Associate entry with the logged-in user
       };
       
       entries.push(newEntry);
-      console.log('Created new entry:', newEntry.id);
+      console.log('Created new entry:', newEntry.id, 'for user:', userId);
       
       return res.status(201).json({
         success: true,

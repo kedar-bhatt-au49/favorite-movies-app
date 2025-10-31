@@ -106,7 +106,7 @@ export const useLogout = () => {
 
 // Check if user is authenticated
 export const useAuth = (): { user: User | null; isAuthenticated: boolean; isLoading: boolean } => {
-  const { data: user, isLoading, error } = useUser();
+  const { data: user, isLoading } = useUser();
   
   // Check if we have a stored user as fallback
   const storedUser = localStorage.getItem('user');
